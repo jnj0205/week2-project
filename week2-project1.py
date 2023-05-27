@@ -1,4 +1,6 @@
 def shoppingCart():
+    shopping_list = {}
+
     while True:
         print()
         print('''### Shopping list ###
@@ -9,55 +11,60 @@ def shoppingCart():
         3. Remove item from shopping list
         4. Get total
         5. Clear shopping list
-        6. quit
+        6. Quit
         ''')
-        selection = input ("Make your selection: ")
+        selection = input("Make your selection: ")
 
         if selection == "1":
-            displayList()
-        if selection == "2":
-            addItem()
-        if selection == "3":
-            removeItem()
-        if selection == "4":
-            getTotal()
-        if selection == "5":
-            clearList()
-        if selection == "6":
-            exitList()
+            displayList(shopping_list)
+        elif selection == "2":
+            addItem(shopping_list)
+        elif selection == "3":
+            removeItem(shopping_list)
+        elif selection == "4":
+            getTotal(shopping_list)
+        elif selection == "5":
+            clearList(shopping_list)
+        elif selection == "6":
+            exitList(shopping_list)
+            break
         else:
             print("You did not make a valid selection.")
-shopping_list = {}
 
-
-def displayList():
+def displayList(shopping_list):
     print()
     print("---SHOPPING LIST---")
-    for n in shopping_list:
-        print(n)
+    for item, price in shopping_list.items():
+        print(f"{item}: ${price:.2f}")
 
-def addItem():
+def addItem(shopping_list):
     print()
-    item = input("Enter the item to the shopping cart: ")
-    price = float(input("what's the price of the item: "))
-    shopping_list[item]=price
-    print(item + " been added")
+    item = input("Enter the item to add to the shopping cart: ")
+    price = float(input("Enter the price of the item: "))
+    shopping_list[item] = price
+    print(item + " has been added to the shopping cart.")
 
-def removeItem():
+def removeItem(shopping_list):
     print()
-    item = input("item was removed from shopping cart: ")
-    shopping_list.pop(item)
-    print(item + " been removed")
+    item = input("Enter the item to remove from the shopping cart: ")
+    if item in shopping_list:
+        shopping_list.pop(item)
+        print(item + " has been removed from the shopping cart.")
+    else:
+        print(item + " is not in the shopping cart.")
 
-def getTotal():
+def getTotal(shopping_list):
     print("Cart Total:")
-    print(sum(shopping_list.values()))
+    total = sum(shopping_list.values())
+    print(f"${total:.2f}")
 
-def clearList():
+def clearList(shopping_list):
     shopping_list.clear()
-    print("Shopping list now empty")
-                  
-def exitList():
-    print("Cart Total:")
-    print(sum(shopping_list.values()))
+    print("Shopping list is now empty.")
+
+def exitList(shopping_list):
+    print("Final Cart Total:")
+    total = sum(shopping_list.values())
+    print(f"${total:.2f}")
+
 shoppingCart()
